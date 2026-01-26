@@ -25,40 +25,7 @@ See [demos directory](demos/) for the demo codes referred to in the slides.
 
 ## Exercises
 
-### Getting started
-
-- [Hello world](01-hello/)
-- [Calculating axpy](02-axpy/)
-
-### Data sharing
-
-- [Data sharing and parallel regions](03-data/)
-note: default is shared, but the loop index is private by default
-See https://www.openmp.org/wp-content/uploads/openmp-examples-5.2.2-final.pdf page 15
-
-### Reduction
-
-- [Reduction](03-reduction/); merge two below
-  - [Race condition in parallel sum](race-condition/)
-  - [Reduction](reduction/)
-
-### Execution control
-
-- [Execution controls](execution-controls/)
-
-TODO: execution control add exercise to add `#pragma omp single` to hello solution to get omp num threads only once.
-
-### OpenMP tasks
-
-- [Simple tasking](simple-tasks/)
-- [Parallel Fibonacci](fibonacci/)
-- [Parallelizing Mandelbrot with tasks](mandelbrot/)
-
-### Hybrid MPI+OpenMP programming
-
-- [Hybrid Hello World](hybrid-hello/)
-- [(Bonus) Multiple thread communication](multiple-thread-communication/)
-- [Hybrid heat equation](heat-hybrid)
+See [exercises directory](exercises/) for exercises.
 
 ## Web resources
 
