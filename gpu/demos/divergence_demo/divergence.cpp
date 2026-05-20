@@ -58,26 +58,10 @@ int main()
     dim3 block(BLOCK_SIZE);
     dim3 grid((N + block.x - 1) / block.x);
 
-    hipLaunchKernelGGL(
-        divergence_kernel,
-        grid,
-        block,
-        0,
-        0,
-        d_x,
-        N
-    );
-
+    divergence_kernel<<<grid, block>>>(d_x, N);
     hipDeviceSynchronize();
-    hipLaunchKernelGGL(
-        no_divergence_kernel,
-        grid,
-        block,
-        0,
-        0,
-        d_x,
-        N
-    );
+
+    no_divergence_kernel<<<grid, block>>>(d_x, N);
     hipDeviceSynchronize();
 
 

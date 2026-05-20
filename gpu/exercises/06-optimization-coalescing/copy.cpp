@@ -38,7 +38,7 @@ void launch_kernel(dim3 grid, dim3 block, float *in, float *out, size_t width, s
 
         // Start timer (CPU)
     auto start = std::chrono::high_resolution_clock::now();
-    hipLaunchKernelGGL(copy_kernel<kern_val>, grid,block, 0, 0, in, out, width, height) ;
+    copy_kernel<kern_val><<<grid, block>>>(in, out, width, height);
     hipDeviceSynchronize();    // Stop timer (CPU)
     auto stop = std::chrono::high_resolution_clock::now();
 
@@ -83,22 +83,14 @@ int main() {
   // Create events
 
    printf("Warm up the gpu!\n"); 
-   for(int i=1;i<=10;i++){ 
-     hipLaunchKernelGGL(copy_kernel<1>, dim3(block_x, block_y), 
-                       dim3(tile_dim_x, tile_dim_y), 0, 0, d_in, d_out, width, 
-                       height);} 
-
+   for(int i=1;i<=10;i++){
+       copy_kernel<1><<<dim3(block_x, block_y), dim3(tile_dim_x, tile_dim_y)>>>(
+           d_in, d_out, width, height);
+   }
 
     hipDeviceSynchronize();    // Stop timer (CPU)
 
   call_all(std::make_integer_sequence<int, 20>{}, dim3(block_x, block_y),dim3(tile_dim_x, tile_dim_y), d_in, d_out, width,height); // generates foo<0>()..foo<4>()
-
-
-
-//  #pragma unroll
-//  for(int i=1;i<=21;i++){
-//    hipLaunchKernelGGL(copy_kernel<(1<<i)-1>, dim3(block_x, block_y),dim3(tile_dim_x, tile_dim_y), 0, 0, d_in, d_out, width,height) ;}
-//  
 
   hipDeviceSynchronize();
 
