@@ -26,7 +26,7 @@ Map: <https://www.retkikartta.fi/> (Good for hiking!)
 # Surroundings of Hotelli Nuuksio
 
 <div style="position: absolute; left:0.0em; top:1.6em">
-![](img/map_close.svg){.center width=95%}
+![](img/map_close.svg){.center width=92%}
 </div>
 
 # Inside Hotelli Nuuksio
