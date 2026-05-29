@@ -140,11 +140,12 @@ The slides are available in
 | Time  | Topic |
 | ----  | ----- |
 | 07:45 | Breakfast
-| 09:00 | [GPU programming](gpu)
+| 09:00 | [OpenMP offload for GPU programming](gpu)
+| 11:00 | [Multi-GPU programming](gpu)
 | 12:00 | Lunch
-| 13:00 | [GPU programming](gpu)
+| 13:00 | [Multi-GPU programming](gpu)
 | 15:00 | Refreshments (available until 17:00)
-| 15:30 | [MPI + GPUs](gpu)
+| 15:30 | [Multi-GPU programming](gpu)
 | 17:00 | Outdoor activity
 | 18:00 | Dinner (available until 20:00)
 | 19:00 | Exercises (optional)
