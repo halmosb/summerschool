@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
             #pragma omp ordered
             MPI_Bcast(&msg, 1, MPI_INT, 0, MPI_COMM_WORLD);
         }
- 
+
         if (rank > 0) {
             printf("Rank %d thread %d received %d\n", rank, tid, msg);
         }

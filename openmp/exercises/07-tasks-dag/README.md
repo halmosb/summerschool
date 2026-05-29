@@ -48,6 +48,6 @@ The [solution directory](solution/) contains a model solution and discussion on 
 
 1. Create a parallel region with a single thread launching an OpenMP task for each function execution.
    OpenMP runtime will then take care of executing task with the available threads.
-   
+
    Make sure that the data flow between functions remain correct. The end result should be 30
    as in the serial code.
