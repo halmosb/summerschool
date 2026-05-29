@@ -4,6 +4,30 @@ event: CSC Summer School in High-Performance Computing 2025
 lang:  en
 ---
 
+# Performance analysis ("profiling")
+
+My code is too slow! What do I do?
+
+- Find out *where* the slow code segments are
+- Figure out *why* it's slow
+    - Suboptimal algorithm?
+    - Inefficient use of hardware features?
+- Focus optimization efforts where it matters!
+    - Long function that is only called once VS a short function that is called 1 000 000 times?
+
+Let's look at common **profiling methods** and **tools** for systematically answering these questions.
+
+# Profiling methods
+
+**Tracing:**
+
+- Place markers or timestamps in code
+- Measure the wall-clock difference between two markers
+
+**Sampling:**
+
+-
+
 # Overview
 
 - Two CPU profiling toolsets
