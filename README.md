@@ -15,7 +15,7 @@ The practical information is in the [wiki](../../wiki).
 
 ## Presentation slides
 
-The slides are available [here](https://csc-training.github.io/summerschool/).
+The slides are available [here](https://csc-training.github.io/summerschool/) ([backup](https://a3s.fi/summerschool/site/index.html)).
 
 ## Exercises
 
