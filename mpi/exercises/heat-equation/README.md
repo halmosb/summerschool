@@ -37,8 +37,8 @@ only one neighbour and the inner ranks with two neighbours.
 2. [Using sendrecv](#using-sendrecv)
 3. [Using non-blocking communication](#using-non-blocking-communication)
 4. [Using collective communication](#using-collective-communication)
-5. [Using Cartesian communicator](#using-cartesian-communicator)
-6. [2D decomposition](#2d-decomposition)
+5. [Bonus: Using Cartesian communicator](#using-cartesian-communicator)
+6. [Bonus: 2D decomposition](#2d-decomposition)
 
 
 ### First steps
@@ -50,7 +50,7 @@ the source code:
 1. Initialize and finalize MPI in the main routine
    - in [cpp/main.cpp](cpp/main.cpp) or
    - in [fortran/main.F90](fortran/main.F90)
-2. Determine the number of MPI processes, rank, as well as the left (or up) and right (or down) neighbours of a domain
+2. Determine the number of MPI processes, rank, as well as the up (or left) and down (or right) neighbours of a domain
    - in the `ParallelData()` constructor in [cpp/heat.hpp](cpp/heat.hpp) or
    - in the routine `parallel_setup()` in [fortran/heat_mod.F90](fortran/heat_mod.F90)
 3. Use `MPI_Send` and `MPI_Recv` for implementing the "halo exchange" operation in the `exchange()` routine
@@ -117,6 +117,10 @@ Implement collective communication in the code.
 
 
 ### Using Cartesian communicator
+
+**Note!** This section depends on bonus material that we do not cover in the lectures.
+You may find our extra slides on process topologies
+[here](https://csc-training.github.io/summerschool/main/html/mpi/zz-process-topologies.html).
 
 Before starting with this exercise, you need to have a working parallel code from the previous exercises.
 You can also use its model solution as starting point.
