@@ -60,7 +60,7 @@ to the file `$HOME/.bashrc`.
 
 For editing program source files you can use e.g. the *nano* editor:
 
-    nano test.F90
+    nano prog.F90
 
 (`^` in nano's shortcuts refer to **Ctrl** key, *i.e.* in order to save the file and exit the editor press `Ctrl+X`)
 Also other popular editors such as *emacs* and *vim* are available.
@@ -86,9 +86,9 @@ module load LUMI/25.03 partition/C
 
 Compilation of MPI programs in C, C++, and Fortran:
 ```bash
-cc -O3 -Wall test.c -o test.x
-CC -O3 -Wall test.cpp -o test.x
-ftn -O3 test.F90 -o test.x
+cc -O3 -Wall prog.c -o prog.x
+CC -O3 -Wall prog.cpp -o prog.x
+ftn -O3 prog.F90 -o prog.x
 ```
 
 The wrapper commands include automatically all the flags needed for building MPI programs.
@@ -98,9 +98,9 @@ The wrapper commands include automatically all the flags needed for building MPI
 Both pure OpenMP and hybrid MPI+OpenMP programs can be compiled with the same wrappers
 by including `-fopenmp` flag:
 ```bash
-cc -fopenmp -O3 -Wall test.c -o test.x
-CC -fopenmp -O3 -Wall test.cpp -o test.x
-ftn -fopenmp -O3 test.F90 -o test.x
+cc -fopenmp -O3 -Wall prog.c -o prog.x
+CC -fopenmp -O3 -Wall prog.cpp -o prog.x
+ftn -fopenmp -O3 prog.F90 -o prog.x
 ```
 
 #### HDF5
@@ -127,16 +127,16 @@ module load LUMI/25.03 partition/G rocm/6.3.4
 
 Compilation of HIP and multi-GPU MPI+HIP programs:
 ```bash
-CC -xhip -O3 test.cpp -o test.x
+CC -xhip -O3 prog.cpp -o prog.x
 ```
 
 ### OpenMP offload and MPI+OpenMP offload
 
 The compilation command is the same as in the CPU case:
 ```bash
-cc -fopenmp -O3 -Wall test.c -o test.x
-CC -fopenmp -O3 -Wall test.cpp -o test.x
-ftn -fopenmp -O3 test.F90 -o test.x
+cc -fopenmp -O3 -Wall prog.c -o prog.x
+CC -fopenmp -O3 -Wall prog.cpp -o prog.x
+ftn -fopenmp -O3 prog.F90 -o prog.x
 ```
 
 **Note!** This will generate OpenMP offload code when the appropriate
@@ -148,9 +148,9 @@ command is the same in CPU and GPU cases.
 To obtain compiler diagnostics:
 
 ```bash
-cc -fopenmp -O3 -Wall -fsave-loopmark test.c -o test.x
-CC -fopenmp -O3 -Wall -fsave-loopmark test.cpp -o test.x
-ftn -fopenmp -O3 -hmsgs -hlist=m test.F90 -o test.x
+cc -fopenmp -O3 -Wall -fsave-loopmark prog.c -o prog.x
+CC -fopenmp -O3 -Wall -fsave-loopmark prog.cpp -o prog.x
+ftn -fopenmp -O3 -hmsgs -hlist=m prog.F90 -o prog.x
 ```
 
 See [HPE Cray Clang C and C++ Quick Reference (17.0.1)](https://support.hpe.com/hpesc/public/docDisplay?docId=dp00004439en_us)
@@ -159,8 +159,8 @@ for further information.
 
 Alternatively to Cray compilers above, the C and C++ codes can also be compiled with AMD Clang:
 ```bash
-amdclang -fopenmp -O3 --offload-arch=gfx90a test.c -o test.x
-amdclang++ -fopenmp -O3 --offload-arch=gfx90a test.cpp -o test.x
+amdclang -fopenmp -O3 --offload-arch=gfx90a prog.c -o prog.x
+amdclang++ -fopenmp -O3 --offload-arch=gfx90a prog.cpp -o prog.x
 ```
 
 
