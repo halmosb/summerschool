@@ -6,6 +6,7 @@
 #include <vector>
 #include <random>
 #include <cassert>
+#include <iostream>
 
 #include <mpi.h>
 
@@ -46,7 +47,7 @@ int main(int argc, char *argv[]) {
 
     if (rank == 0) {
 
-        int messageLength = 1;
+        int messageLength = 10;
         std::vector<int> receiveBuffer(messageLength);
 
         // TODO: receive the full message sent from rank 1.
@@ -57,12 +58,16 @@ int main(int argc, char *argv[]) {
         const int sourceRank = 1;
 
         // ... your code here ...
-
+	MPI_Status status;
+	//MPI_Probe(1, tag, MPI_COMM_WORLD, &status);
+	//receiveBuffer.resize(messageLength);
         // Receive the message. Will error with MPI_ERR_TRUNCATE if the buffer is too small for the incoming message
         MPI_Recv(receiveBuffer.data(), receiveBuffer.size(), MPI_INT,
-            sourceRank, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE
+            sourceRank, tag, MPI_COMM_WORLD, &status
         );
 
+	MPI_Get_count(&status, MPI_INT, &messageLength);
+	//std::cout << messageLength;
         printf("Rank 0: Received %d integers from rank 1.\n", messageLength);
         // Print the received numbers
         for (int i = 0; i < receiveBuffer.size(); i++ ) {

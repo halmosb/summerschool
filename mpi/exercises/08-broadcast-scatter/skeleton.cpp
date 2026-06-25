@@ -7,6 +7,7 @@
 #include <mpi.h>
 
 #define MAX_PRINT_SIZE 12
+#define TAG 0
 
 void init_buffer(std::vector<int> &buffer);
 void print_buffer(std::vector<int> &buffer);
@@ -33,14 +34,43 @@ int main(int argc, char *argv[])
 
     /* Send everywhere */
     // TODO: Implement the broadcast of the array buf
-
+    if (rank == 0){
+	int count = MAX_PRINT_SIZE / size;
+    	for (int i = 1; i < size; i++){
+    		MPI_Send(buf.data()+i*count, count, MPI_INT, i, TAG, MPI_COMM_WORLD);
+    	}
+	//buf.resize(count);
+    } else {
+	int count = MAX_PRINT_SIZE / size;
+	MPI_Status status;
+    	MPI_Recv(buf.data(), count, MPI_INT, 0, TAG, MPI_COMM_WORLD, &status);
+    }
     /* End timing */
     double t1 = MPI_Wtime();
 
     /* Print data that was received */
     print_buffer(buf);
+
+    /* Start timing */
+    MPI_Barrier(MPI_COMM_WORLD);
+    double t0_bcast = MPI_Wtime();
+
+    /* Send everywhere */
+    // TODO: Implement the broadcast of the array buf
+    //buf.resize(MAX_PRINT_SIZE);
+    init_buffer(buf);
+    
+    int count = MAX_PRINT_SIZE / size;
+    std::vector<int> rec_buf(12);
+    MPI_Scatter(buf.data(), count, MPI_INT, rec_buf.data(), count, MPI_INT, 0, MPI_COMM_WORLD);
+    /* End timing */
+    double t1_bcast = MPI_Wtime();
+
+    /* Print data that was received */
+    print_buffer(rec_buf);
     if (rank == 0) {
-        printf("Time elapsed: %6.8f s\n", t1 - t0);
+        printf("Time elapsed:       %6.8f s\n", t1 - t0);
+        printf("Time elapsed bcast: %6.8f s\n", t1_bcast - t0_bcast);
     }
 
     MPI_Finalize();

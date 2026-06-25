@@ -44,15 +44,25 @@ int main(int argc, char *argv[]) {
     double t0 = MPI_Wtime();
 
     // TODO: Send messages
-    //MPI_Send(message.data(), message.size(), MPI_INT, destination, tag, MPI_COMM_WORLD);
-
+    MPI_Request request;
+    MPI_Status status;
+    MPI_Isend(message.data(), message.size(), MPI_INT, destination, tag, MPI_COMM_WORLD, &request);
+    
     printf("Sender: %d. Sent elements: %d. Tag: %d. Receiver: %d\n",
            rank, numElements, rank + 1, destination
     );
-    MPI_Sendrecv(message.data(), numElements, MPI_INT, destination, tag, receiveBuffer.data(), numElements, MPI_INT, source, rank, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    // TODO: Receive messages
-    //MPI_Recv(receiveBuffer.data(), numElements, MPI_INT, source, rank, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
+    //MPI_Sendrecv(message.data(), numElements, MPI_INT, destination, tag, receiveBuffer.data(), numElements, MPI_INT, source, rank, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    // TODO: Receive messages
+    MPI_Request rec_request;
+    MPI_Irecv(receiveBuffer.data(), numElements, MPI_INT, source, rank, MPI_COMM_WORLD, &rec_request);
+    
+    MPI_Status rec_status;
+
+    // MPI_Wait(&rec_request, &status);
+    MPI_Request reqs[2] = {request, rec_request};
+    MPI_Status stats[2] = {status, rec_status};
+    MPI_Waitall(2, reqs, stats);
     printf("Receiver: %d. first element %d\n", rank, receiveBuffer[0]);
 
 

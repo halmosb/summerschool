@@ -7,7 +7,7 @@
 #include <mpi.h>
 
 constexpr int n = 840;
-constexpr int TAG = 0;
+//constexpr int TAG = 0;
 
 int main(int argc, char** argv)
 {
@@ -18,13 +18,15 @@ int main(int argc, char** argv)
 
   printf("Computing approximation to pi with N=%d\n", n);
   int istart, istop;
-  if (rank == 0){
+  /*if (rank == 0){
     istart = 1;
     istop = n / 2;
   } else {
     istart = n / 2 + 1;
     istop = n;
-  }
+  }*/
+  istart = n / size * rank + 1;
+  istop = n / size * (rank + 1);
 
   double pi = 0.0;
   for (int i=istart; i <= istop; i++) {
@@ -34,13 +36,28 @@ int main(int argc, char** argv)
 
   pi *= 4.0 / n;
 
-  if (rank == 0){
+  /*if (rank == 0){
+    double pi_total = pi;
     double pi_recv = 0;
-    MPI_Recv(&pi_recv, 1, MPI_DOUBLE, 1, TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    printf("Approximate pi=%18.16f (exact pi=%10.8f)\n", pi+pi_recv, M_PI);
+    for (int i = 1; i < size; i++){
+    	MPI_Recv(&pi_recv, 1, MPI_DOUBLE, i, TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    	pi_total += pi_recv;
+    }
+    printf("Approximate pi=%18.16f (exact pi=%10.8f)\n", pi_total, M_PI);
   } else {
     MPI_Send(&pi, 1, MPI_DOUBLE, 0, TAG, MPI_COMM_WORLD); 
+  }*/
+  //double pi_rec = 100;
+  void *recbuf;
+  if (rank == 0){
+     recbuf = MPI_IN_PLACE;
+  } else {
+     recbuf = &pi;
   }
-
+  MPI_Reduce(recbuf, &pi, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+  //MPI_Barrier(MPI_COMM_WORLD);
+  if (true){
+    printf("Approximate pi=%18.16f (exact pi=%10.8f)\n", pi, M_PI);
+  }
   MPI_Finalize();
 }
